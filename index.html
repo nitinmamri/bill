@@ -285,15 +285,8 @@
           </tr>
         </thead>
         <tbody id="rows">
-          <tr>
-            <td>1</td>
-            <td><input type="text" name="product" placeholder="Product description" oninput="calc();"></td>
-            <td><input type="number" min="1" value="1" name="qty" oninput="calc();"></td>
-            <td><input type="number" min="0" value="0" name="price" oninput="calc();"></td>
-            <td><span name="total">0.00</span></td>
-            <td><button type="button" class="delete-btn" onclick="deleteRow(this)">X</button></td>
-          </tr>
-        </tbody>
+  <!-- यहां कोई डिफ़ॉल्ट row नहीं डालें -->
+</tbody>
       </table>
 
       <button type="button" id="add-product-btn" onclick="addRow()">+ Add Product</button>
@@ -405,3 +398,4 @@
   </script>
 </body>
 </html>
+
