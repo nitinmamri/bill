@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
@@ -31,7 +32,6 @@
       overflow: hidden;
       z-index: 10;
     }
-    /* ====== HEADER SECTION BG ====== */
     .invoice-header-section {
       background: linear-gradient(94deg, #edf8ee 10%, #d5e9f8 80%);
       border-radius: 12px;
@@ -67,7 +67,6 @@
       background: linear-gradient(90deg, #0f713d, #16a34a);
       cursor: default;
     }
-
     .studio-name {
       width: 100%;
       text-align: center;
@@ -115,7 +114,6 @@
       padding-left: 70px;
       max-width: 34%;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -128,13 +126,33 @@
       text-align: center;
       font-size: 15px;
     }
+    /* PRODUCT DESCRIPTION कॉलम चौड़ा करें */
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 37%;
+      min-width: 110px;
+      max-width: 290px;
+    }
+    /* QTY कॉलम पतला करें */
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 10%;
+      min-width: 36px;
+      max-width: 55px;
+    }
+    /* PRICE कॉलम पतला करें */
+    th:nth-child(4),
+    td:nth-child(4) {
+      width: 13%;
+      min-width: 46px;
+      max-width: 75px;
+    }
     table thead tr th {
       background-color: #007bff;
       color: white;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-
     input,
     select {
       font-size: 15px;
@@ -153,8 +171,6 @@
     select {
       width: 90px;
     }
-
-    /* ग्रैंड टोटल को राइट एलाइन और पूरी लाइन पर करने के लिए */
     .totals-container {
       display: flex;
       justify-content: flex-end;
@@ -178,7 +194,6 @@
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-
     .footer {
       margin-top: 12px;
       font-size: 15px;
@@ -336,7 +351,6 @@
         background-color: #fff !important;
         box-sizing: border-box !important;
       }
-      /* Added for flex-row background in print */
       .flex-row {
         background: linear-gradient(94deg, #e1f8ed 10%, #f7fcef 80%) !important;
         border-radius: 10px !important;
@@ -357,7 +371,6 @@
       id="watermark"
     />
     <button class="print-btn" onclick="printInvoice()">बिल प्रिंट करें</button>
-    <!-- ====== HEADER SECTION START ====== -->
     <div class="invoice-header-section">
       <div class="header">
         <div class="invoice-title">INVOICE</div>
@@ -385,7 +398,6 @@
         </div>
       </div>
     </div>
-    <!-- ====== HEADER SECTION END ====== -->
 
     <form autocomplete="off" onsubmit="return false;">
       <table id="invoice-table">
@@ -399,28 +411,21 @@
             <th></th>
           </tr>
         </thead>
-        <tbody id="rows">
-          <!-- यहाँ कोई डिफ़ॉल्ट row नहीं डाली गई -->
-        </tbody>
+        <tbody id="rows"></tbody>
       </table>
-      <button type="button" id="add-product-btn" onclick="addRow()">
-        + Add Product
-      </button>
+      <button type="button" id="add-product-btn" onclick="addRow()">+ Add Product</button>
       <div class="totals-container">
         <div class="totals">
           Total : <span id="grand-total">0.00</span>
         </div>
       </div>
+
       <div class="footer">
         <div class="footer-left">
           Payment Date:
           <input type="date" id="pay-date" style="width: 23%" /><br />
           Payment Mode:
-          <select
-            id="payment-mode-select"
-            class="payment-mode-select"
-            onchange="updatePaymentModeText()"
-          >
+          <select id="payment-mode-select" class="payment-mode-select" onchange="updatePaymentModeText()">
             <option value="UPI">UPI</option>
             <option value="Cash">Cash</option>
           </select>
@@ -428,33 +433,26 @@
         </div>
         <div class="footer-right">
           <span class="sign">Signature:</span>
-          <select
-            id="signature-option"
-            onchange="signatureChange()"
-            style="font-size: 14px"
-          >
+          <select id="signature-option" onchange="signatureChange()" style="font-size: 14px">
             <option value="">-- Select --</option>
-            <option value="https://lh3.googleusercontent.com/d/1YtLptLLQX13fqaHAN-xrAHtQn7v__g2K=w300">
-              मेरी मोहर
-            </option>
+            <option value="https://lh3.googleusercontent.com/d/1YtLptLLQX13fqaHAN-xrAHtQn7v__g2K=w300">मेरी मोहर</option>
             <option value="line">लाइन </option>
           </select>
           <div id="signature-display"></div>
         </div>
       </div>
     </form>
-
   </div>
 
   <script>
-    function addRow() {
+    function addRow(product = '', qty = 1, price = 0) {
       const rowCount = document.querySelectorAll("#rows tr").length + 1;
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${rowCount}</td>
-        <td><input type="text" name="product" placeholder="Product description" oninput="calc();"></td>
-        <td><input type="number" min="1" value="1" name="qty" oninput="calc();"></td>
-        <td><input type="number" min="0" value="0" name="price" oninput="calc();"></td>
+        <td><input type="text" name="product" placeholder="Product description" value="${product}" oninput="calc(); saveInvoiceData();"></td>
+        <td><input type="number" min="1" value="${qty}" name="qty" oninput="calc(); saveInvoiceData();"></td>
+        <td><input type="number" min="0" value="${price}" name="price" oninput="calc(); saveInvoiceData();"></td>
         <td><span name="total">0</span></td>
         <td><button type="button" class="delete-btn" onclick="deleteRow(this)">X</button></td>
       `;
@@ -465,6 +463,7 @@
       btn.closest("tr").remove();
       updateSR();
       calc();
+      saveInvoiceData();
     }
     function updateSR() {
       Array.from(document.querySelectorAll("#rows tr")).forEach((tr, i) => {
@@ -486,6 +485,7 @@
       const select = document.getElementById("payment-mode-select");
       const textSpan = document.querySelector(".payment-mode-text");
       textSpan.textContent = select.value;
+      saveInvoiceData();
     }
     function printInvoice() {
       updatePaymentModeText();
@@ -496,13 +496,13 @@
       const display = document.getElementById("signature-display");
       const val = select.value;
       if (val === "line") {
-        display.innerHTML =
-          '<hr style="border: 0.5px solid #000; margin: 0;">';
+        display.innerHTML = '<hr style="border: 0.5px solid #000; margin: 0;">';
       } else if (val) {
         display.innerHTML = `<img src="${val}" alt="Mohr" style="max-height: 90px; max-width: 100%;">`;
       } else {
         display.innerHTML = "";
       }
+      saveInvoiceData();
     }
     function adjustWatermarkSize() {
       const watermark = document.getElementById("watermark");
@@ -529,10 +529,54 @@
         }
       });
     }
+    // Save invoice data to localStorage
+    function saveInvoiceData() {
+      const data = {
+        name: document.getElementById('name').value,
+        address: document.getElementById('address').value,
+        mobile: document.getElementById('mobile').value,
+        invDate: document.getElementById('inv-date').value,
+        invNo: document.getElementById('inv-no').value,
+        payDate: document.getElementById('pay-date').value,
+        payMode: document.getElementById('payment-mode-select').value,
+        signature: document.getElementById('signature-option').value,
+        rows: []
+      };
+      document.querySelectorAll('#rows tr').forEach(tr => {
+        data.rows.push({
+          product: tr.querySelector('[name="product"]').value,
+          qty: tr.querySelector('[name="qty"]').value,
+          price: tr.querySelector('[name="price"]').value
+        });
+      });
+      localStorage.setItem('studio-invoice-data', JSON.stringify(data));
+    }
+    // Restore invoice data from localStorage
+    function restoreInvoiceData() {
+      const data = JSON.parse(localStorage.getItem('studio-invoice-data') || '{}');
+      if (!data) return;
+      document.getElementById('name').value = data.name || '';
+      document.getElementById('address').value = data.address || '';
+      document.getElementById('mobile').value = data.mobile || '';
+      document.getElementById('inv-date').value = data.invDate || '';
+      document.getElementById('inv-no').value = data.invNo || '';
+      document.getElementById('pay-date').value = data.payDate || '';
+      document.getElementById('payment-mode-select').value = data.payMode || 'UPI';
+      document.getElementById('signature-option').value = data.signature || '';
+      signatureChange();
+      document.getElementById('rows').innerHTML = '';
+      (data.rows || []).forEach((row, i) => {
+        addRow(row.product, row.qty, row.price);
+      });
+      if ((data.rows || []).length === 0) {
+        addRow();
+      }
+      calc();
+    }
     window.addEventListener("resize", adjustWatermarkSize);
     window.addEventListener("scroll", adjustWatermarkSize);
     window.onload = () => {
-      addRow();
+      restoreInvoiceData();
       adjustWatermarkSize();
       updatePaymentModeText();
       checkEmptyInputs();
