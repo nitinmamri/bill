@@ -669,13 +669,13 @@
   let invoiceNo = document.getElementById("inv-no").value || "";
   let total = document.getElementById("grand-total").textContent || "0";
 
-  let message = "🧾 *INVOICE*\n";
+  let message = "*INVOICE*\n";
   message += "NITIN STUDIO & JAN SEWA KENDRA\n\n";
-  message += "👨 Name: " + name + "\n";
-  message += "📆 Date: " + date + "\n";
-  message += "📜 Invoice No: " + invoiceNo + "\n\n";
+  message += "Name: " + name + "\n";
+  message += "Date: " + date + "\n";
+  message += "Invoice No: " + invoiceNo + "\n\n";
 
-  message += "🛒 *Products:*\n";
+  message += "*Products:*\n";
 
   document.querySelectorAll("#rows tr").forEach((tr, i) => {
     let product = tr.querySelector('[name="product"]').value;
@@ -685,7 +685,7 @@
     message += (i + 1) + ". " + product + " | Qty: " + qty + " | ₹" + rowTotal + "\n";
   });
 
-  message += "\n💰 *Total: ₹" + total + "*";
+  message += "\n *Total: ₹" + total + "*";
 
   let phone = mobile.replace(/\D/g, "");
 
