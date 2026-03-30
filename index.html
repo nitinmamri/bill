@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8" />
+<html lang="hi"><head>
+  <meta charset="UTF-8">
   <title>Invoice - Nitin Studio &amp; Jan Sewa Kendra</title>
   <style>
     body {
@@ -361,16 +359,220 @@
       }
     }
   </style>
+<style>
+.SignerDigitalExtPopupModal {
+	font-family: Calibri, sans-serif;
+	display: none;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+	display: flex;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 9999;
+}
+
+.SignerDigitalExtClose {
+    position: absolute;
+    top: 30px;
+    right: 525px;
+    background: none;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+.SignerDigitalExtLicSitesClose {
+	background: none;
+	border: none;
+	color: black;
+	font-size: 25px;
+	cursor: pointer;
+	line-height:1;
+	transition: color 0.3s ease-in-out;
+}
+
+.SignerDigitalExtSelCertContainer {
+    font-family: Calibri, sans-serif;
+    background-color: #e6faf6;
+    top: 50px;
+	position: relative;
+	padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    width: 420px;
+    height: 420px;
+}
+
+.SignerDigitalExtSCPinContainer {
+    font-family: Calibri, sans-serif;
+    background-color: #e6faf6;
+    top: 50px;
+	position: relative;
+	padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    width: 360px;
+    height: 180px;
+}
+
+#SDCertListContainer {
+    margin-top: 10px;
+    max-height: 300px;
+    background-color: white;
+    overflow-y: auto;
+    padding: 0px;
+    border-radius: 5px;
+}
+
+
+.SignerDigitalExtImg {
+    text-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+}
+
+.SignerDigitalExtSpan {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.SignerDigitalExtCertItem {
+    padding: 5px;
+    border-bottom: 1px solid;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+.SignerDigitalExtCertItem:hover {
+	background-color: #ccc;
+}
+
+.SignerDigitalExtCertItem.selected {
+	background-color: #ccc;
+	border-color: #007bff;
+}
+
+.expired {
+    color: red;
+    font-weight: bold;
+}
+
+.SignerDigitalExtButton {
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+.SignerDigitalExtLicSitesImg {
+	padding-top: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.SignerDigitalExtLicSitesSpan {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.SignerDigitalExtLicSitesContainer {
+	font-family: Calibri, sans-serif;
+	background-color: #e6faf6;
+	border: 1px solid black;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin: 30px auto;
+	width: 550px;
+	height: 500px;
+}
+
+.SignerDigitalExtLicSitesHeader {
+	font-size: 16px;
+	display: flex;
+	justify-content: space-between;
+	background-color: white;
+	padding: 5px;
+	border-bottom: 1px solid #ddd;
+}
+
+.SignerDigitalExtLicSitesParagraph {
+	padding-left: 15px;
+	padding-top: 20px;
+	font-size: 14px;
+}
+
+.SignerDigitalExtLicSitesDiv {
+	display: flex;
+	justify-content:center;
+	padding: 10px;
+}
+
+.SignerDigitalExtLicSitesBtn {
+	width: 100px;
+	padding: 3px;
+	font-weight: 600;
+	font-size: 12px;
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+ .SignerDigitalExtLicSitesTable {
+     width: 100%;
+     background-color: white;
+     border-collapse: collapse;
+ }
+
+	
+ .SignerDigitalExtLicSitesTd {
+	 padding: 5px !important;
+     width: 140px;
+     border: 1px solid #ddd;
+     text-align: left;
+	 vertical-align:middle;
+ }
+ .SignerDigitalExtLicSitesTdd {
+     border: 1px solid #ddd;
+     text-align: center;
+ }
+
+ .SignerDigitalExtLicSitesTh {
+     border: 1px solid #ddd;
+     background-color: #f4f4f4;
+	 line-height:1;
+     width: 100px;
+     text-align: left;
+	 margin-top:5px;
+     padding: 5px;
+ }
+.SignerDigitalExtLicSitesScroll {
+     max-height: 200px;
+     overflow-y: auto;
+ }
+ .SignerDigitalExtLicSitesDltbtn {
+     color: white;
+     background-color: #e42424;
+     border: 1px solid black;
+     cursor: pointer;
+     border-radius: 4px;
+ }
+ .SignerDigitalExtLicSitesDltbtn:hover {
+         background-color: darkred;
+ }
+</style>
 </head>
 <body>
   <div class="a4-page" id="invoice">
-    <img
-      src="https://lh3.googleusercontent.com/d/1bIanKUOQ-oUhdfk6cocXuHzrFwg9t0Y1=w300"
-      alt="Watermark"
-      class="watermark"
-      id="watermark"
-    />
-    <button class="print-btn" onclick="printInvoice()">बिल प्रिंट करें</button>
+    <img src="https://lh3.googleusercontent.com/d/1bIanKUOQ-oUhdfk6cocXuHzrFwg9t0Y1=w300" alt="Watermark" class="watermark" id="watermark" style="transform: translate(-50%, -50%) scale(1); display: block;">
+    <div style="display:flex; gap:10px;">
+  <button class="print-btn" onclick="printInvoice()">बिल प्रिंट करें</button>
+  <button class="print-btn" onclick="sendWhatsApp()">📲 WhatsApp भेजें</button>
+</div>
     <div class="invoice-header-section">
       <div class="header">
         <div class="invoice-title">INVOICE</div>
@@ -384,17 +586,17 @@
       <div class="flex-row">
         <div class="flex-col">
           Name:
-          <input type="text" id="name" style="width: 82%; margin-top: 2px" />
+          <input type="text" id="name" style="width: 82%; margin-top: 2px">
           Address:
-          <input type="text" id="address" style="width: 78%; margin-top: 2px" />
+          <input type="text" id="address" style="width: 78%; margin-top: 2px">
           Mobile No:
-          <input type="text" id="mobile" style="width: 75%; margin-top: 2px" />
+          <input type="text" id="mobile" style="width: 75%; margin-top: 2px">
         </div>
         <div class="flex-col">
           Date:
-          <input type="date" id="inv-date" style="width: 60%" /><br />
+          <input type="date" id="inv-date" style="width: 60%"><br>
           Invoice No:
-          <input type="text" id="inv-no" style="width: 43%; margin-top: 3px" readonly />
+          <input type="text" id="inv-no" style="width: 43%; margin-top: 3px" readonly="">
         </div>
       </div>
     </div>
@@ -411,26 +613,40 @@
             <th></th>
           </tr>
         </thead>
-        <tbody id="rows"></tbody>
+        <tbody id="rows"><tr>
+        <td>1</td>
+        <td><input type="text" name="product" placeholder="Product description" value="हमारे राष्ट्र निर्माता   PPT" oninput="calc(); saveInvoiceData();"></td>
+        <td><input type="number" min="1" value="176" name="qty" oninput="calc(); saveInvoiceData();"></td>
+        <td><input type="number" min="0" value="5" name="price" oninput="calc(); saveInvoiceData();"></td>
+        <td><span name="total">880.00</span></td>
+        <td><button type="button" class="delete-btn" onclick="deleteRow(this)">X</button></td>
+      </tr><tr>
+        <td>2</td>
+        <td><input type="text" name="product" placeholder="Product description" value="reguoierpg" oninput="calc(); saveInvoiceData();"></td>
+        <td><input type="number" min="1" value="3" name="qty" oninput="calc(); saveInvoiceData();"></td>
+        <td><input type="number" min="0" value="80" name="price" oninput="calc(); saveInvoiceData();"></td>
+        <td><span name="total">240.00</span></td>
+        <td><button type="button" class="delete-btn" onclick="deleteRow(this)">X</button></td>
+      </tr></tbody>
       </table>
       <button type="button" id="add-product-btn" onclick="addRow()">+ Add Product</button>
       <div class="totals-container">
         <div class="totals">
-          Total : <span id="grand-total">0.00</span>
+          Total : <span id="grand-total">1120.00</span>
         </div>
       </div>
 
       <div class="footer">
         <div class="footer-left">
           Payment Date:
-          <input type="date" id="pay-date" style="width: 30%" /><br />
+          <input type="date" id="pay-date" style="width: 30%"><br>
           Payment Mode:
           <select id="payment-mode-select" class="payment-mode-select" onchange="updatePaymentModeText()">
             <option value="Pending">Pending</option>
             <option value="UPI">UPI</option>
             <option value="Cash">Cash</option>
           </select>
-          <span class="payment-mode-text" style="display: none">Pending</span>
+          <span class="payment-mode-text" style="display: none">UPI</span>
         </div>
         <div class="footer-right">
           <span class="sign">Signature:</span>
@@ -439,13 +655,49 @@
             <option value="https://lh3.googleusercontent.com/d/1YtLptLLQX13fqaHAN-xrAHtQn7v__g2K=w300">मेरी मोहर</option>
             <option value="line">लाइन </option>
           </select>
-          <div id="signature-display"></div>
+          <div id="signature-display"><hr style="border: 0.5px solid #000; margin: 0;"></div>
         </div>
       </div>
     </form>
   </div>
 
   <script>
+    function sendWhatsApp() {
+  let name = document.getElementById("name").value || "";
+  let mobile = document.getElementById("mobile").value || "";
+  let date = document.getElementById("inv-date").value || "";
+  let invoiceNo = document.getElementById("inv-no").value || "";
+  let total = document.getElementById("grand-total").textContent || "0";
+
+  let message = "🧾 *INVOICE*\n";
+  message += "NITIN STUDIO & JAN SEWA KENDRA\n\n";
+  message += "👨 Name: " + name + "\n";
+  message += "📆 Date: " + date + "\n";
+  message += "📜 Invoice No: " + invoiceNo + "\n\n";
+
+  message += "🛒 *Products:*\n";
+
+  document.querySelectorAll("#rows tr").forEach((tr, i) => {
+    let product = tr.querySelector('[name="product"]').value;
+    let qty = tr.querySelector('[name="qty"]').value;
+    let rowTotal = tr.querySelector('[name="total"]').textContent;
+
+    message += (i + 1) + ". " + product + " | Qty: " + qty + " | ₹" + rowTotal + "\n";
+  });
+
+  message += "\n💰 *Total: ₹" + total + "*";
+
+  let phone = mobile.replace(/\D/g, "");
+
+  if (phone.length < 10) {
+    alert("Mobile number सही डालें");
+    return;
+  }
+
+  let url = "https://wa.me/91" + phone + "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
     function addRow(product = '', qty = 1, price = 0) {
       const rowCount = document.querySelectorAll("#rows tr").length + 1;
       const tr = document.createElement("tr");
@@ -619,5 +871,89 @@
       }
     });
   </script>
-</body>
-</html>
+
+
+<iframe frameborder="0" scrolling="no" style="background-color: transparent; border: 0px; display: none;"></iframe><div id="GOOGLE_INPUT_CHEXT_FLAG" input="" input_stat="{&quot;tlang&quot;:true,&quot;tsbc&quot;:true,&quot;pun&quot;:true,&quot;mk&quot;:true,&quot;ss&quot;:true}" style="display: none;"></div><div id="1373E9D6_F7B6_A4C1_DAAB_02EEB21F5BA0"></div></body><div id="SelCertPopupModal" class="SignerDigitalExtPopupModal" style="display:none;">
+    <div class="SignerDigitalExtSelCertContainer">
+        <button id="SelCertCloseBtn" class="SignerDigitalExtClose">x</button>
+		<div class="SignerDigitalExtImg">
+			<img id="SDIconSelCert" alt="Globe icon" height="32" width="32" src="chrome-extension://glghokcicpikglmflbbelbgeafpijkkf/icon32.png">&nbsp;&nbsp;&nbsp;
+			<span class="SignerDigitalExtSpan" style="text-align:center;">Select Certificate</span>
+		</div>		
+		<div style="height: 310px; width: 100%; border-bottom: 1px solid black;background-color:white;">
+			<div style="max-height: 310px; overflow-y: auto;">
+				<div id="SDCertListContainer"></div>
+			</div>
+		</div>
+		<div class="SignerDigitalExtButton">
+			<button id="SelCertOkBtn" style="width: 80px">OK</button>
+			<button id="SelCertCancelBtn" style="margin-left:15px; width: 80px;">Cancel</button>
+		</div>
+	</div>
+</div>
+<div id="SdExtSCPinPopupModal" class="SignerDigitalExtPopupModal" style="display:none;">
+    <div class="SignerDigitalExtSCPinContainer">
+		<form>
+			<div class="SignerDigitalExtImg" style="border-bottom: 1px solid black;">
+				<img id="SDIconSCPin" alt="Globe icon" height="32" width="32" src="chrome-extension://glghokcicpikglmflbbelbgeafpijkkf/icon32.png">&nbsp;&nbsp;&nbsp;
+				<span class="SignerDigitalExtSpan" style="text-align:center;">Smartcard / Token User Pin</span>
+			</div>
+			<div style="text-align:center; padding-top:25px; padding-bottom:25px; font-size:14px;">User PIN:&nbsp;&nbsp;&nbsp;<input id="SdExtUserPin" type="password">
+			</div>
+			<div class="SignerDigitalExtButton" style="border-top: 1px solid black;">
+				<button id="SdScPinOkBtn" type="button" style="width: 80px">OK</button>
+				<button id="SdSCPinCancelBtn" type="button" style="margin-left:15px; width: 80px;">Cancel</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="LicSitesPopupModal" class="SignerDigitalExtPopupModal" style="display:none;">
+	<div class="SignerDigitalExtLicSitesContainer">
+		<div class="SignerDigitalExtLicSitesHeader">
+			<span style="margin:10px;">Signer.Digital</span>
+			<button id="LicSitesCloseBtn" class="SignerDigitalExtLicSitesClose">x</button>
+		</div>
+		<div class="SignerDigitalExtLicSitesImg">
+			<img id="SDIconLicSite" alt="Globe icon" height="32" width="32" src="chrome-extension://glghokcicpikglmflbbelbgeafpijkkf/icon32.png">&nbsp;&nbsp;
+			<span class="SignerDigitalExtLicSitesSpan">Signer.Digital - Confirm Key Listing / Usage</span>
+		</div>
+		<div style="display:none;"><img id="trash_icon_src" src="chrome-extension://glghokcicpikglmflbbelbgeafpijkkf/icon_trash.svg"></div>
+		<div class="SignerDigitalExtLicSitesParagraph">
+			<span id="currentDomainLink" style="font-size:18px;font-weight:600;">Current Domain</span><br>
+			is trying to detect smartcards connected, or read certificate or use key for signing/encryption. Please
+			select your option.
+		</div>
+		<div class="SignerDigitalExtLicSitesDiv">
+			<button id="denyBtn" class="SignerDigitalExtLicSitesBtn">Deny</button>
+			<button id="alwaysallowBtn" class="SignerDigitalExtLicSitesBtn" style="margin-left:30px;" title="Allow access to Check Vendor License for Site.">Always Allow</button>
+		</div>
+		<div style="padding: 10px; text-align: center; ">
+			<strong style="font-size:18px;">Licensed Sites</strong><br><br>
+			<div style="height: 200px; width: 100%; border: 1px solid black;">
+				<div class="SignerDigitalExtLicSitesScroll">
+					<table class="SignerDigitalExtLicSitesTable">
+						<thead>
+							<tr>
+								<th class="SignerDigitalExtLicSitesTh">Website</th>
+								<th class="SignerDigitalExtLicSitesTh">License Status</th>
+								<th class="SignerDigitalExtLicSitesTh">Features</th>
+								<th class="SignerDigitalExtLicSitesTh" style="width:50px;">Action</th>
+							</tr>
+						</thead>
+						<tbody id="licenseSitesTableBody">
+							<!-- Table rows will be dynamically added here -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<span id="SDLicSitesErrMsg" style="color:red"></span>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+<div style="all: initial;-webkit-user-select: none !important;-moz-user-select: none !important;-ms-user-select: none !important;user-select: none !important;cursor: default !important;margin: 0px !important;padding: 0px !important;border: 0px !important;overflow: visible !important;visibility: visible;display: block !important;position: fixed !important;float: none !important;clear: none !important;line-height: normal !important;z-index: 2147483647 !important;opacity: 1 !important;width: 0px !important;height: 0px !important;font-family: &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif !important;font-size: 15px !important;font-weight: normal !important;color: black !important;background-color: transparent !important;text-align: left !important;" id="zwo5kui3cK5Z2ZyG7eH3PGg-2627922254870537" class="zwo5kui3cK5Z2ZyG7eH3PGg" popover=""></div></html>
