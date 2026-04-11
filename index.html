@@ -572,7 +572,11 @@
     <div style="display:flex; gap:10px;">
   <button class="print-btn" onclick="printInvoice()">बिल प्रिंट करें</button>
   <button class="print-btn" onclick="sendWhatsApp()">📲 WhatsApp भेजें</button>
+  <button class="print-btn sheet-btn" onclick="sendToGoogleSheet()">📄 Google Sheet भेजें</button>
 </div>
+
+<div id="sheet-status"></div>
+
     <div class="invoice-header-section">
       <div class="header">
         <div class="invoice-title">INVOICE</div>
@@ -662,6 +666,8 @@
   </div>
 
   <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ8cHk6ldj3WobNDnVbR1460eIl0UyyV8ZuPqh1dTSQwQKqB4NWeRSH0PIbgRER17jMA/exec";
+
     function sendWhatsApp() {
   let name = document.getElementById("name").value || "";
   let mobile = document.getElementById("mobile").value || "";
@@ -669,11 +675,11 @@
   let invoiceNo = document.getElementById("inv-no").value || "";
   let total = document.getElementById("grand-total").textContent || "0";
 
-  let message = "*INVOICE*\n";
-  message += "NITIN STUDIO & JAN SEWA KENDRA\n\n";
-  message += "Name: " + name + "\n";
-  message += "Date: " + date + "\n";
-  message += "Invoice No: " + invoiceNo + "\n\n";
+  let message = "**               INVOICE               **\n";
+  message += "*NITIN STUDIO & JAN SEWA KENDRA*\n\n";
+  message += "*Name:* " + name + "\n";
+  message += "*Date:* " + date + "\n";
+  message += "*Invoice No:* " + invoiceNo + "\n\n";
 
   message += "*Products:*\n";
 
@@ -844,7 +850,79 @@
       }
       saveInvoiceData();
     }
+    async function sendToGoogleSheet() {
+  updatePaymentModeText();
 
+  const statusBox = document.getElementById("sheet-status");
+  statusBox.style.color = "#0f713d";
+  statusBox.textContent = "रिकार्ड भेजा जा रहा है...";
+
+  const data = {
+    name: document.getElementById('name').value || '',
+    address: document.getElementById('address').value || '',
+    mobile: document.getElementById('mobile').value || '',
+    invDate: document.getElementById('inv-date').value || '',
+    invNo: document.getElementById('inv-no').value || '',
+    payDate: document.getElementById('pay-date').value || '',
+    payMode: document.getElementById('payment-mode-select').value || '',
+    signature: document.getElementById('signature-option').value || '',
+    grandTotal: document.getElementById('grand-total').textContent || '0',
+    rows: []
+  };
+
+  document.querySelectorAll('#rows tr').forEach((tr, index) => {
+    data.rows.push({
+      sr: index + 1,
+      product: tr.querySelector('[name="product"]').value || '',
+      qty: tr.querySelector('[name="qty"]').value || '0',
+      price: tr.querySelector('[name="price"]').value || '0',
+      total: tr.querySelector('[name="total"]').textContent || '0'
+    });
+  });
+
+  if (!data.name || !data.invDate || data.rows.length === 0) {
+    statusBox.style.color = "red";
+    statusBox.textContent = "नाम, तारीख और कम से कम 1 प्रोडक्ट भरें।";
+
+    // ⏳ 4 सेकंड बाद गायब
+    setTimeout(() => {
+      statusBox.textContent = "";
+    }, 4000);
+
+    return;
+  }
+
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.text();
+    statusBox.style.color = "#0f713d";
+    statusBox.textContent = "Invoice सफलतापूर्वक रिकार्ड में  सुरक्षित कर दिया गया।";
+
+    // ⏳ 4 सेकंड बाद गायब
+    setTimeout(() => {
+      statusBox.textContent = "";
+    }, 4000);
+
+    console.log("Sheet response:", result);
+
+  } catch (error) {
+    console.error("Google Sheet Error:", error);
+    statusBox.style.color = "red";
+    statusBox.textContent = "रिकार्ड भेजने में दिक्कत आई।";
+
+    // ⏳ 4 सेकंड बाद गायब
+    setTimeout(() => {
+      statusBox.textContent = "";
+    }, 4000);
+  }
+}
     window.addEventListener("resize", adjustWatermarkSize);
     window.addEventListener("scroll", adjustWatermarkSize);
     
