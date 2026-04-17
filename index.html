@@ -668,15 +668,15 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ8cHk6ldj3WobNDnVbR1460eIl0UyyV8ZuPqh1dTSQwQKqB4NWeRSH0PIbgRER17jMA/exec";
 
-    function sendWhatsApp() {
+ async function sendWhatsApp() {
+
   let name = document.getElementById("name").value || "";
   let mobile = document.getElementById("mobile").value || "";
   let date = document.getElementById("inv-date").value || "";
   let invoiceNo = document.getElementById("inv-no").value || "";
   let total = document.getElementById("grand-total").textContent || "0";
 
-  // ✅ FIXED LINE
-  let payMode = document.getElementById("payment-mode-select").value || "";
+  let payMode = document.getElementById("payment-mode-select").value || "Pending";
 
   let message = "***********INVOICE***********\n";
   message += "*NITIN STUDIO & JAN SEWA KENDRA*\n";
@@ -697,10 +697,7 @@
 
   message += "\n*Total: ₹" + total + "*\n";
 
-  // ✅ Payment Section
   message += "\n*********Payment Details:*********\n\n";
-  
-  
   message += "*Payment Status:* " + payMode + "\n";
 
   let phone = mobile.replace(/\D/g, "");
@@ -710,9 +707,76 @@
     return;
   }
 
-  let url = "https://wa.me/91" + phone + "?text=" + encodeURIComponent(message);
+  const statusBox = document.getElementById("sheet-status");
 
-  window.open(url, "_blank");
+  const data = {
+    name: name,
+    address: document.getElementById('address').value || '',
+    mobile: mobile,
+    invDate: date,
+    invNo: invoiceNo,
+    payDate: document.getElementById('pay-date').value || '',
+    payMode: payMode,
+    signature: document.getElementById('signature-option').value || '',
+    grandTotal: total,
+    rows: []
+  };
+
+  document.querySelectorAll('#rows tr').forEach((tr, index) => {
+    data.rows.push({
+      sr: index + 1,
+      product: tr.querySelector('[name="product"]').value || '',
+      qty: tr.querySelector('[name="qty"]').value || '0',
+      price: tr.querySelector('[name="price"]').value || '0',
+      total: tr.querySelector('[name="total"]').textContent || '0'
+    });
+  });
+
+  if (!data.name || !data.invDate || data.rows.length === 0) {
+    statusBox.style.color = "red";
+    statusBox.textContent = "नाम, तारीख और कम से कम 1 प्रोडक्ट भरें।";
+
+    setTimeout(() => {
+      statusBox.textContent = "";
+    }, 4000);
+
+    return;
+  }
+
+  try {
+    // 🔵 पहले Google Sheet में save
+    statusBox.style.color = "#0f713d";
+    statusBox.textContent = "रिकार्ड भेजा जा रहा है...";
+
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
+
+    await response.text();
+
+    statusBox.textContent = "Invoice सफलतापूर्वक रिकार्ड में सुरक्षित कर दिया गया।";
+
+    setTimeout(() => {
+      statusBox.textContent = "";
+    }, 4000);
+
+    // 🟢 अब WhatsApp open
+    let url = "https://wa.me/91" + phone + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
+
+  } catch (error) {
+    console.error("Google Sheet Error:", error);
+    statusBox.style.color = "red";
+    statusBox.textContent = "रिकार्ड भेजने में दिक्कत आई।";
+
+    setTimeout(() => {
+      statusBox.textContent = "";
+    }, 4000);
+  }
 }
     function addRow(product = '', qty = 1, price = 0) {
       const rowCount = document.querySelectorAll("#rows tr").length + 1;
